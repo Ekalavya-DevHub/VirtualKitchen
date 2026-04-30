@@ -1,25 +1,33 @@
 package com.processVisualisation.virtualKitchen.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
-@Document (collation =  "ingredient")
+@Document(collection = "ingredients")
 public class Ingredient {
 
+    public static final String SEQUENCE_NAME = "ingredients_sequence";
+
     @Id
-    private String ingId;
+    private Long id;
 
-    @Field("ingName")
-    private String ingName;
+    @Indexed(unique = true)
+    private String name;
 
-    private String ingDescription;
+    private String description;
+
+    private UnitType defaultUnit;
 
     @CreatedDate
-    private LocalDate ingCreateDate;
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 }
